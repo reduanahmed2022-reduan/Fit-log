@@ -10,20 +10,34 @@ const PlanContext = createContext<PlanContextType | undefined>(undefined);
 
 export function PlanProvider({ children }: { children: ReactNode }) {
 
-    const [plan, setPlan] = useState<Workout[]>([]);
+    // const [plan, setPlan] = useState<Workout[]>([]);
 
-    const [saved, setSaved] = useState<Workout[]>([]);
+    // const [saved, setSaved] = useState<Workout[]>([]);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const storedPlan = localStorage.getItem("fitlog_plan");
+    //     const storedPlan = localStorage.getItem("fitlog_plan");
 
-        const storedSaved = localStorage.getItem("fitlog_saved");
+    //     const storedSaved = localStorage.getItem("fitlog_saved");
 
-        if (storedPlan) setPlan(JSON.parse(storedPlan));
+    //     if (storedPlan) setPlan(JSON.parse(storedPlan));
 
-        if (storedSaved) setSaved(JSON.parse(storedSaved));
-    }, []);
+    //     if (storedSaved) setSaved(JSON.parse(storedSaved));
+    // }, []);
+
+    const [plan, setPlan] = useState<Workout[]>(() => {
+  if (typeof window === "undefined") return [];
+  const storedPlan = localStorage.getItem("fitlog_plan");
+  return storedPlan ? JSON.parse(storedPlan) : [];
+});
+
+const [saved, setSaved] = useState<Workout[]>(() => {
+  if (typeof window === "undefined") return [];
+  const storedSaved = localStorage.getItem("fitlog_saved");
+  return storedSaved ? JSON.parse(storedSaved) : [];
+});
+
+
 
     const persist = (nextPlan: Workout[] | null, nextSaved: Workout[] | null) => {
 
