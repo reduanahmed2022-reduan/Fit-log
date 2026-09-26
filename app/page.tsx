@@ -16,7 +16,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchWorkouts = async () => {
       try {
-        const res = await fetch("https://api.abcz.workers.dev/api/fitlog");
+        const res = await fetch(" https://api.abcz.workers.dev/api/fitlog");
         if (!res.ok) throw new Error("Failed to fetch workouts");
         const data: Workout[] = await res.json();
         setWorkouts(data);
@@ -45,7 +45,7 @@ export default function HomePage() {
         return (parseInt(a.duration) || 0) - (parseInt(b.duration) || 0);
       }
       if (sortBy === "calories") {
-        return (parseInt(a.calories) || 0) - (parseInt(b.calories) || 0);
+        return (parseInt(a.caloriesBurned) || 0) - (parseInt(b.caloriesBurned) || 0);
       }
       if (sortBy === "rating") {
         return (b.rating || 0) - (a.rating || 0);
@@ -156,7 +156,7 @@ export default function HomePage() {
                   </span>
                   <span className="flex items-center justify-center gap-1">
                     <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-orange-500" />
-                    <span>{item.calories}</span>
+                    <span>{item.caloriesBurned}</span>
                   </span>
                   <span className="flex items-center justify-center sm:justify-end gap-1">
                     <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-yellow-400 fill-yellow-400" />
