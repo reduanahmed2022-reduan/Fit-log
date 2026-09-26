@@ -74,7 +74,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { usePlan } from "../app/context/PlanContext";
+ import { usePlan } from "../app/context/PlanContext";
 import { Dumbbell, Menu, X } from "lucide-react";
 
 export default function Navbar() {
