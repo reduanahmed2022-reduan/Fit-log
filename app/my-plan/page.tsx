@@ -1,4 +1,4 @@
-          "use client";
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -43,7 +43,7 @@ export default function MyPlanPage() {
           </div>
           <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg">
             <span className="text-neutral-500 text-xs font-bold uppercase block mb-1">
-              Calories
+              calories
             </span>
             <span className="text-3xl font-black text-orange-500">{totalCalories} kcal</span>
           </div>
@@ -53,21 +53,19 @@ export default function MyPlanPage() {
         <div className="flex border-b border-neutral-800 mb-8">
           <button
             onClick={() => setActiveTab("plan")}
-            className={`pb-4 px-6 font-bold text-lg transition-colors ${
-              activeTab === "plan"
+            className={`pb-4 px-6 font-bold text-lg transition-colors ${activeTab === "plan"
                 ? "border-b-2 border-[#ccff00] text-[#ccff00]"
                 : "text-neutral-400 hover:text-white"
-            }`}
+              }`}
           >
-            Today&s Plan ({plan.length})
+            {`Today's Plan`}({plan.length})
           </button>
           <button
             onClick={() => setActiveTab("saved")}
-            className={`pb-4 px-6 font-bold text-lg transition-colors ${
-              activeTab === "saved"
+            className={`pb-4 px-6 font-bold text-lg transition-colors ${activeTab === "saved"
                 ? "border-b-2 border-[#ccff00] text-[#ccff00]"
                 : "text-neutral-400 hover:text-white"
-            }`}
+              }`}
           >
             Saved ({saved.length})
           </button>
@@ -93,79 +91,83 @@ export default function MyPlanPage() {
             {currentList.map((item) => (
               <div
                 key={item.id}
-                className={`bg-neutral-900 border ${
-                  item.done ? "border-emerald-800 bg-neutral-900/60" : "border-neutral-800"
-                } rounded-lg p-4 flex flex-col md:flex-row items-center justify-between gap-4`}
+                className={`bg-neutral-900 border ${item.done ? "border-emerald-800 bg-neutral-900/60" : "border-neutral-800"
+                  } rounded-lg p-4 flex flex-col md:flex-row items-center justify-between gap-4`}
               >
                 <div className="flex items-center gap-4 w-full md:w-auto">
                   <Image
-                    src={item.image || "https://via.placeholder.com/150"} 
-                    alt={item.name} 
-                    className="w-20 h-20 rounded object-cover bg-neutral-800" 
-                  /> 
-                  <div> 
-                    <h3 
-                      className={`font-bold text-lg uppercase ${ 
-                        item.done ? "line-through text-neutral-500" : "text-white" 
-                      }`} 
-                    > 
-                      {item.name} 
-                    </h3> 
-                    <p className="text-neutral-400 text-sm mb-2">{item.equipment}</p> 
-                    <div className="flex items-center gap-4 text-xs text-neutral-400"> 
-                      <span className="flex items-center gap-1"> 
-                        <Clock className="w-3.5 h-3.5 text-[#ccff00]" /> {item.duration} 
-                      </span> 
-                      <span className="flex items-center gap-1"> 
-                        <Flame className="w-3.5 h-3.5 text-orange-500" /> {item.caloriesBurned} 
-                      </span> 
-                      <span className="flex items-center gap-1"> 
-                        <Star className="w-3.5 h-3.5 text-yellow-400" /> {item.rating} 
-                      </span> 
-                    </div> 
-                  </div> 
-                </div> 
- 
-                <div className="flex items-center gap-3 w-full md:w-auto justify-end"> 
-                  <Link 
-                    href={`/workout/${item.id}`} 
-                    className="p-2.5 bg-neutral-800 text-neutral-300 rounded hover:text-white hover:bg-neutral-700" 
-                    title="View Details" 
-                  > 
-                    <Eye className="w-5 h-5" /> 
-                  </Link> 
- 
-                  {activeTab === "plan" && ( 
-                    <button 
-                      onClick={() => markAsDone(item.id)} 
-                      className={`p-2.5 rounded ${ 
-                        item.done 
-                          ? "bg-emerald-600 text-white" 
-                          : "bg-neutral-800 text-neutral-300 hover:text-emerald-400" 
-                      }`} 
-                      title="Mark as Done" 
-                    > 
-                      <Check className="w-5 h-5" /> 
-                    </button> 
-                  )} 
- 
-                  <button 
-                    onClick={() => 
-                      activeTab === "plan" 
-                        ? removeFromPlan(item.id) 
-                        : removeFromSaved(item.id) 
-                    } 
-                    className="p-2.5 bg-neutral-800 text-neutral-300 hover:text-red-400 rounded" 
-                    title="Remove" 
-                  > 
-                    <X className="w-5 h-5" /> 
-                  </button> 
-                </div> 
-              </div> 
-            ))} 
-          </div> 
-        )} 
-      </div> 
-    </div> 
-  ); 
+                    src={item.image || "https://via.placeholder.com/150"}
+                    alt={item.name}
+                    width={740}
+                    height={416}
+                    className="w-20 h-20 rounded object-cover bg-neutral-800"
+                  />
+                  <div>
+                    <h3
+                      className={`font-bold text-lg uppercase ${item.done ? "line-through text-neutral-500" : "text-white"
+                        }`}
+                    >
+                      {item.name}
+                    </h3>
+                    <p className="text-neutral-400 text-sm mb-2">{item.equipment}</p>
+                    <div className="flex items-center gap-4 text-xs text-neutral-400">
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-3.5 h-3.5 text-[#ccff00]" /> {item.duration}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Flame className="w-3.5 h-3.5 text-orange-500" /> {item.caloriesBurned}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Star className="w-3.5 h-3.5 text-yellow-400" /> {item.rating}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 w-full md:w-auto justify-end">
+
+                  <div className="flex items-center gap-3 w-full md:w-auto justify-end">
+                    {/* View Details Button */}
+                    <Link
+                      href={`/workout/${item.id}`}
+                      className="px-5 py-2.5 bg-neutral-900 border border-neutral-700 text-white text-sm font-semibold rounded-full hover:bg-neutral-800 transition-colors"
+                    >
+                      View Details
+                    </Link>
+
+                    {/* Mark as Done Button */}
+                    {activeTab === "plan" && (
+                      <button
+                        onClick={() => markAsDone(item.id)}
+                        className={`flex items-center gap-2 px-5 py-2.5 text-sm font-bold rounded-full transition-colors ${item.done
+                            ? "bg-emerald-600 text-white"
+                            : "bg-[#ccff00] text-black hover:bg-opacity-90"
+                          }`}
+                      >
+                        <Check className="w-4 h-4 stroke-[3]" />
+                        <span>Mark as Done</span>
+                      </button>
+                    )}
+
+                    {/* Remove (X) Button */}
+                    <button
+                      onClick={() =>
+                        activeTab === "plan"
+                          ? removeFromPlan(item.id)
+                          : removeFromSaved(item.id)
+                      }
+                      className="w-10 h-10 flex items-center justify-center bg-neutral-900 border border-neutral-700 text-neutral-400 hover:text-white rounded-full transition-colors"
+                      title="Remove"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }

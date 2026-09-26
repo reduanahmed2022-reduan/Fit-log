@@ -2,7 +2,7 @@ export interface Workout {
   id: string;
   name: string;
   description?: string;
-  category: string[];
+  muscleGroups: string[];
   equipment: string;
   difficulty?: string;
   sets?: number;

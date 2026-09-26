@@ -36,7 +36,7 @@ export default function HomePage() {
 
     const filtered = workouts.filter((item) => {
       const nameMatch = item.name.toLowerCase().includes(q);
-      const tagMatch = item.category?.some((c) => c.toLowerCase().includes(q));
+      const tagMatch = item.muscleGroups?.some((c) => c.toLowerCase().includes(q));
       return nameMatch || tagMatch;
     });
 
@@ -130,12 +130,12 @@ export default function HomePage() {
 
                   <div className="p-4 sm:p-5">
                     <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3">
-                      {item.category?.map((cat, idx) => (
+                      {item.muscleGroups?.map((Chest, idx) => (
                         <span
                           key={idx}
                           className="bg-[#ccff00] text-black text-[9px] sm:text-[10px] font-extrabold uppercase px-2 sm:px-2.5 py-1 rounded-sm tracking-wider"
                         >
-                          {cat}
+                          {Chest}
                         </span>
                       ))}
                     </div>
@@ -152,11 +152,11 @@ export default function HomePage() {
                 <div className="px-4 sm:px-5 pb-4 sm:pb-5 pt-3 border-t border-neutral-800 grid grid-cols-3 gap-2 text-[10px] sm:text-xs text-neutral-400">
                   <span className="flex items-center justify-center sm:justify-start gap-1">
                     <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#ccff00]" />
-                    <span>{item.duration}</span>
+                    <span>{item.duration} min</span>
                   </span>
                   <span className="flex items-center justify-center gap-1">
                     <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-orange-500" />
-                    <span>{item.caloriesBurned}</span>
+                    <span>{item.caloriesBurned} kcal</span>
                   </span>
                   <span className="flex items-center justify-center sm:justify-end gap-1">
                     <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-yellow-400 fill-yellow-400" />
