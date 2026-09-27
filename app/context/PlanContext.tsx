@@ -22,20 +22,6 @@ useEffect(() => {
       console.error("Failed to parse storage data", error);
     }
   }, []);
-  
-
-//    const [plan, setPlan] = useState<Workout[]>(() => {
-//   if (typeof window === "undefined") return [];
-//   const storedPlan = localStorage.getItem("fitlog_plan");
-//   return storedPlan ? JSON.parse(storedPlan) : [];
-// });
-
-// const [saved, setSaved] = useState<Workout[]>(() => {
-//   if (typeof window === "undefined") return [];
-//   const storedSaved = localStorage.getItem("fitlog_saved");
-//   return storedSaved ? JSON.parse(storedSaved) : [];
-// });
-
 
   //  addToPlan
   const addToPlan = (item: Workout) => {
