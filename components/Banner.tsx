@@ -1,13 +1,11 @@
+
 "use client"; 
- 
-import Image, { StaticImageData } from "next/image"; 
+
+import Image from "next/image"; 
 import { ArrowDown } from "lucide-react"; 
- 
-interface BannerSectionProps { 
-  bannerImage: StaticImageData | string; 
-} 
- 
-export default function BannerSection({ bannerImage }: BannerSectionProps) { 
+import bannerImg from "@/public/assets/banner.png";
+
+export default function BannerSection() { 
   return ( 
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"> 
       {/* Text Content */} 
@@ -29,13 +27,13 @@ export default function BannerSection({ bannerImage }: BannerSectionProps) {
           <ArrowDown className="w-5 h-5" /> 
         </a> 
       </div> 
- 
-      {/* Banner Image Container */} 
+
+      {/* Banner Image */} 
       <div className="flex justify-center items-center w-full mt-4 lg:mt-0"> 
         <div className="relative w-full max-w-[280px] sm:max-w-[380px] lg:max-w-[450px]"> 
           <Image 
-            src={bannerImage} 
-            alt="FitLog Hero Banner" 
+            src={bannerImg} 
+            alt="Banner" 
             width={450} 
             height={320} 
             priority 
@@ -45,4 +43,4 @@ export default function BannerSection({ bannerImage }: BannerSectionProps) {
       </div> 
     </section> 
   ); 
-};
+}

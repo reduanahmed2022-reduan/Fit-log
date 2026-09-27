@@ -14,19 +14,44 @@ export default function WorkoutDetailsPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const { plan, addToPlan, saveForLater } = usePlan();
 
-  useEffect(() => {
-    if (!id) return;
-    fetch(`https://api.abcz.workers.dev/api/fitlog/${id}`)
-      .then((res) => res.json())
-      .then((data: Workout) => {
-        setWorkout(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, [id]);
+  // useEffect(() => {
+  //   if (!id) return;
+  //   fetch(`/data.json`)
+  //     .then((res) => res.json())
+  //     .then((data: Workout) => {
+  //       setWorkout(data);
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //       setLoading(false);
+  //     });
+  // }, [id]);
+
+useEffect(() => {
+  if (!id) return;
+
+  fetch("/data.json")
+    .then((res) => {
+      if (!res.ok) throw new Error("data.json file not found");
+      return res.json();
+    })
+    .then((data: Workout[]) => {
+    
+      const foundWorkout = data.find((item) => String(item.id) === String(id));
+
+      if (foundWorkout) {
+        setWorkout(foundWorkout);
+      } else {
+        setWorkout(null);
+      }
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.error("Fetch error:", err);
+      setLoading(false);
+    });
+}, [id]);
 
   if (loading) {
     return (
@@ -64,46 +89,50 @@ export default function WorkoutDetailsPage() {
         <div className="flex flex-col justify-between"> 
           <div> 
             <div className="flex flex-wrap gap-2 mb-4"> 
-              {workout.category?.map((cat, idx) => ( 
+              {workout.muscleGroups?.map((Chest, idx) => ( 
                 <span 
                   key={idx} 
                   className="bg-neutral-800 text-[#ccff00] text-xs font-bold px-3 py-1 rounded-full uppercase" 
                 > 
-                  {cat} 
+                  {Chest} 
                 </span> 
               ))} 
             </div> 
  
             <h1 className="text-4xl font-black uppercase mb-3">{workout.name}</h1> 
             <p className="text-neutral-400 mb-8 leading-relaxed">{workout.description}</p> 
- 
-            <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-6 mb-8 grid grid-cols-2 sm:grid-cols-3 gap-4"> 
-              <div> 
-                <span className="text-xs text-neutral-500 uppercase block mb-1">Equipment</span> 
-                <span className="font-semibold text-sm">{workout.equipment}</span> 
-              </div> 
-              <div> 
-                <span className="text-xs text-neutral-500 uppercase block mb-1">Difficulty</span> 
-                <span className="font-semibold text-sm">{workout.difficulty || "Intermediate"}</span> 
-              </div> 
-              <div> 
-                <span className="text-xs text-neutral-500 uppercase block mb-1">Sets</span> 
-                <span className="font-semibold text-sm">{workout.sets || 4}</span> 
-              </div> 
-              <div> 
-                <span className="text-xs text-neutral-500 uppercase block mb-1">Reps</span> 
-                <span className="font-semibold text-sm">{workout.reps || "6-8"}</span> 
-              </div> 
-              <div> 
-                <span className="text-xs text-neutral-500 uppercase block mb-1">Duration</span> 
-                <span className="font-semibold text-sm">{workout.duration}</span> 
-              </div> 
-              <div> 
-                <span className="text-xs text-neutral-500 uppercase block mb-1">Calories</span> 
-                <span className="font-semibold text-sm">{workout.calories}</span> 
-              </div> 
-            </div> 
- 
+             <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-6 mb-8 divide-y divide-neutral-800/80">
+  <div className="flex justify-between items-center py-2.5 first:pt-0 last:pb-0">
+    <span className="text-xs text-neutral-400 font-medium uppercase tracking-wider">Equipment</span>
+    <span className="font-semibold text-sm text-white">{workout.equipment}</span>
+  </div>
+
+  <div className="flex justify-between items-center py-2.5">
+    <span className="text-xs text-neutral-400 font-medium uppercase tracking-wider">Difficulty</span>
+    <span className="font-semibold text-sm text-white">{workout.difficulty || "Intermediate"}</span>
+  </div>
+
+  <div className="flex justify-between items-center py-2.5">
+    <span className="text-xs text-neutral-400 font-medium uppercase tracking-wider">Sets</span>
+    <span className="font-semibold text-sm text-white">{workout.sets || 4}</span>
+  </div>
+
+  <div className="flex justify-between items-center py-2.5">
+    <span className="text-xs text-neutral-400 font-medium uppercase tracking-wider">Reps</span>
+    <span className="font-semibold text-sm text-white">{workout.reps || "6-8"}</span>
+  </div>
+
+  <div className="flex justify-between items-center py-2.5">
+    <span className="text-xs text-neutral-400 font-medium uppercase tracking-wider">Duration</span>
+    <span className="font-semibold text-sm text-white">{workout.duration}</span>
+  </div>
+
+  <div className="flex justify-between items-center py-2.5">
+    <span className="text-xs text-neutral-400 font-medium uppercase tracking-wider">Calories</span>
+    <span className="font-semibold text-sm text-white">{workout.caloriesBurned}</span>
+  </div>
+</div>
+
             <div className="mb-8"> 
               <h3 className="text-lg font-bold uppercase mb-4 text-white">INSTRUCTIONS</h3> 
               <ol className="space-y-3 text-neutral-300"> 

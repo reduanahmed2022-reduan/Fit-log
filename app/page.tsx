@@ -4,8 +4,9 @@
 import { useEffect, useState, useMemo, ChangeEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Clock, Flame, Star, ChevronDown, Search } from "lucide-react";
+import { Clock, Flame, Star, Search } from "lucide-react";
 import { Workout } from "../app/type/workout";
+import Banner from "@/components/Banner";
 
 export default function HomePage() {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
@@ -16,7 +17,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchWorkouts = async () => {
       try {
-        const res = await fetch(" https://api.abcz.workers.dev/api/fitlog");
+        const res = await fetch("/data.json");
         if (!res.ok) throw new Error("Failed to fetch workouts");
         const data: Workout[] = await res.json();
         setWorkouts(data);
@@ -56,8 +57,9 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-neutral-950 text-white overflow-x-hidden">
+      <Banner />
       <section id="library" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-16">
-        
+
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
           <div>
@@ -70,34 +72,34 @@ export default function HomePage() {
           </div>
 
           {/* Controls */}
-          <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-3">
+          <div className="w-full lg:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            {/* Search Input */}
             <div className="relative w-full sm:w-64 lg:w-72">
               <input
                 type="text"
                 placeholder="Search workout or tag..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="input input-bordered input-sm w-full h-10 bg-neutral-900 border-neutral-800 text-white placeholder:text-neutral-500 pr-9 focus:border-[#ccff00] focus:outline-none"
+                className="input input-bordered input-sm w-full h-10 bg-neutral-900 border-neutral-800 text-white placeholder:text-neutral-500 pr-9 focus:border-[#ccff00] focus:outline-none rounded-md"
               />
               <Search className="w-4 h-4 absolute right-3 top-3 text-neutral-500 pointer-events-none" />
             </div>
 
-            <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
+            {/* Sort Dropdown Group */}
+            <div className="flex items-center gap-2 w-full sm:w-auto">
               <span className="text-sm text-neutral-400 whitespace-nowrap">Sort By:</span>
-              <div className="relative w-full sm:w-auto">
-                <select
-                  value={sortBy}
-                  onChange={(e: ChangeEvent<HTMLSelectElement>) => setSortBy(e.target.value)}
-                  className="select select-sm h-10 w-full sm:w-32 bg-neutral-900 border-neutral-800 text-white pr-8 focus:border-[#ccff00] focus:outline-none appearance-none"
-                >
-                  <option value="duration">Duration</option>
-                  <option value="calories">Calories</option>
-                  <option value="rating">Rating</option>
-                </select>
-                <ChevronDown className="w-4 h-4 absolute right-2 top-3 pointer-events-none text-neutral-400" />
-              </div>
+              <select
+                value={sortBy}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) => setSortBy(e.target.value)}
+                className="select select-sm h-9 w-28 max-w-[110px] bg-neutral-900 border border-neutral-800 text-white focus:border-[#ccff00] focus:outline-none rounded-md cursor-pointer text-xs px-2 py-0 min-h-0"
+              >
+                <option value="duration">Duration</option>
+                <option value="calories">Calories</option>
+                <option value="rating">Rating</option>
+              </select>
             </div>
           </div>
+
         </div>
 
         {/* Content */}
@@ -171,3 +173,4 @@ export default function HomePage() {
     </main>
   );
 }
+

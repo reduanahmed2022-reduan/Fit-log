@@ -13,6 +13,8 @@ export interface Workout {
   image: string;
   instructions?: string[];
   done?: boolean;
+  category?: string;
+  calories?: number;
 }
 
 export interface PlanContextType {
@@ -23,4 +25,14 @@ export interface PlanContextType {
   markAsDone: (id: string) => void;
   removeFromPlan: (id: string) => void;
   removeFromSaved: (id: string) => void;
+}
+
+interface ExerciseDetail {
+  equipment: string;
+  difficulty: string;
+  sets: number;
+  reps: string;
+  duration: string;
+  calories: string;
+  rating: number;
 }

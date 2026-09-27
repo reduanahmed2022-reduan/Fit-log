@@ -1,178 +1,3 @@
-// "use client";
-
-// import { useState } from "react";
-// import Link from "next/link";
-// import { usePlan } from "@/app/context/PlanContext";
-// import { Check, X, Clock, Flame, Star, Dumbbell } from "lucide-react";
-// import { Workout } from "@/app/type/workout";
-// import Image from "next/image";
-
-// export default function MyPlanPage() {
-//   const [activeTab, setActiveTab] = useState<"plan" | "saved">("plan");
-//   const { plan, saved, markAsDone, removeFromPlan, removeFromSaved } = usePlan();
-
-//   const currentList: Workout[] = activeTab === "plan" ? plan : saved;
-
-//   const totalExercises = plan.length;
-//   const totalMinutes = plan.reduce((acc, item) => acc + (parseInt(item.duration) || 0), 0);
-//   const totalCalories = plan.reduce((acc, item) => acc + (parseInt(item.caloriesBurned) || 0), 0);
-
-//   return (
-//     <div className="bg-neutral-950 min-h-screen text-white py-12">
-//       <div className="max-w-7xl mx-auto px-4">
-//         <div className="mb-8">
-//           <h1 className="text-4xl font-black uppercase">MY PLAN</h1>
-//           <p className="text-neutral-400 mt-1">
-//             Cap of five lifts for today. Finish them, then load more.
-//           </p>
-//         </div>
-
-//         {/* Metrics Row */}
-//         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-//           <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg">
-//             <span className="text-neutral-500 text-xs font-bold uppercase block mb-1">
-//               Exercises
-//             </span>
-//             <span className="text-3xl font-black text-white">{totalExercises} / 5</span>
-//           </div>
-//           <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg">
-//             <span className="text-neutral-500 text-xs font-bold uppercase block mb-1">
-//               Minutes
-//             </span>
-//             <span className="text-3xl font-black text-[#ccff00]">{totalMinutes} min</span>
-//           </div>
-//           <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg">
-//             <span className="text-neutral-500 text-xs font-bold uppercase block mb-1">
-//               calories
-//             </span>
-//             <span className="text-3xl font-black text-orange-500">{totalCalories} kcal</span>
-//           </div>
-//         </div>
-
-//         {/* Tabs */}
-//         <div className="flex border-b border-neutral-800 mb-8">
-//           <button
-//             onClick={() => setActiveTab("plan")}
-//             className={`pb-4 px-6 font-bold text-lg transition-colors ${activeTab === "plan"
-//                 ? "border-b-2 border-[#ccff00] text-[#ccff00]"
-//                 : "text-neutral-400 hover:text-white"
-//               }`}
-//           >
-//             {`Today's Plan`}({plan.length})
-//           </button>
-//           <button
-//             onClick={() => setActiveTab("saved")}
-//             className={`pb-4 px-6 font-bold text-lg transition-colors ${activeTab === "saved"
-//                 ? "border-b-2 border-[#ccff00] text-[#ccff00]"
-//                 : "text-neutral-400 hover:text-white"
-//               }`}
-//           >
-//             Saved ({saved.length})
-//           </button>
-//         </div>
-
-//         {/* Empty State */}
-//         {currentList.length === 0 ? (
-//           <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-12 text-center my-8">
-//             <Dumbbell className="w-12 h-12 text-neutral-600 mx-auto mb-4" />
-//             <h3 className="text-2xl font-black uppercase mb-2">NOTHING HERE YET</h3>
-//             <p className="text-neutral-400 mb-6">
-//               Browse the library and add a lift to get today moving.
-//             </p>
-//             <Link
-//               href="/"
-//               className="inline-block bg-[#ccff00] text-black font-bold px-6 py-3 rounded hover:bg-opacity-90 transition-opacity"
-//             >
-//               Go to workouts
-//             </Link>
-//           </div>
-//         ) : (
-//           <div className="space-y-4">
-//             {currentList.map((item) => (
-//               <div
-//                 key={item.id}
-//                 className={`bg-neutral-900 border ${item.done ? "border-emerald-800 bg-neutral-900/60" : "border-neutral-800"
-//                   } rounded-lg p-4 flex flex-col md:flex-row items-center justify-between gap-4`}
-//               >
-//                 <div className="flex items-center gap-4 w-full md:w-auto">
-//                   <Image
-//                     src={item.image || "https://via.placeholder.com/150"}
-//                     alt={item.name}
-//                     width={740}
-//                     height={416}
-//                     className="w-20 h-20 rounded object-cover bg-neutral-800"
-//                   />
-//                   <div>
-//                     <h3
-//                       className={`font-bold text-lg uppercase ${item.done ? "line-through text-neutral-500" : "text-white"
-//                         }`}
-//                     >
-//                       {item.name}
-//                     </h3>
-//                     <p className="text-neutral-400 text-sm mb-2">{item.equipment}</p>
-//                     <div className="flex items-center gap-4 text-xs text-neutral-400">
-//                       <span className="flex items-center gap-1">
-//                         <Clock className="w-3.5 h-3.5 text-[#ccff00]" /> {item.duration}
-//                       </span>
-//                       <span className="flex items-center gap-1">
-//                         <Flame className="w-3.5 h-3.5 text-orange-500" /> {item.caloriesBurned}
-//                       </span>
-//                       <span className="flex items-center gap-1">
-//                         <Star className="w-3.5 h-3.5 text-yellow-400" /> {item.rating}
-//                       </span>
-//                     </div>
-//                   </div>
-//                 </div>
-
-//                 <div className="flex items-center gap-3 w-full md:w-auto justify-end">
-
-//                   <div className="flex items-center gap-3 w-full md:w-auto justify-end">
-//                     {/* View Details Button */}
-//                     <Link
-//                       href={`/workout/${item.id}`}
-//                       className="px-5 py-2.5 bg-neutral-900 border border-neutral-700 text-white text-sm font-semibold rounded-full hover:bg-neutral-800 transition-colors"
-//                     >
-//                       View Details
-//                     </Link>
-
-//                     {/* Mark as Done Button */}
-//                     {activeTab === "plan" && (
-//                       <button
-//                         onClick={() => markAsDone(item.id)}
-//                         className={`flex items-center gap-2 px-5 py-2.5 text-sm font-bold rounded-full transition-colors ${item.done
-//                             ? "bg-emerald-600 text-white"
-//                             : "bg-[#ccff00] text-black hover:bg-opacity-90"
-//                           }`}
-//                       >
-//                         <Check className="w-4 h-4 stroke-[3]" />
-//                         <span>Mark as Done</span>
-//                       </button>
-//                     )}
-
-//                     {/* Remove (X) Button */}
-//                     <button
-//                       onClick={() =>
-//                         activeTab === "plan"
-//                           ? removeFromPlan(item.id)
-//                           : removeFromSaved(item.id)
-//                       }
-//                       className="w-10 h-10 flex items-center justify-center bg-neutral-900 border border-neutral-700 text-neutral-400 hover:text-white rounded-full transition-colors"
-//                       title="Remove"
-//                     >
-//                       <X className="w-4 h-4" />
-//                     </button>
-//                   </div>
-//                 </div>
-//               </div>
-//             ))}
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
-
-
 
 "use client";
 
@@ -185,77 +10,110 @@ import Image from "next/image";
 
 export default function MyPlanPage() {
   const [activeTab, setActiveTab] = useState<"plan" | "saved">("plan");
+  const [sortBy, setSortBy] = useState<string>("");
   const { plan, saved, markAsDone, removeFromPlan, removeFromSaved } = usePlan();
 
-  const currentList: Workout[] = activeTab === "plan" ? plan : saved;
+  const rawList: Workout[] = activeTab === "plan" ? plan : saved;
+
+  const currentList = [...rawList].sort((a, b) => {
+    if (sortBy === "duration") {
+      return (parseInt(a.duration) || 0) - (parseInt(b.duration) || 0);
+    }
+    if (sortBy === "calories") {
+      return (parseInt(a.caloriesBurned) || 0) - (parseInt(b.caloriesBurned) || 0);
+    }
+    if (sortBy === "rating") {
+      return (b.rating || 0) - (a.rating || 0);
+    }
+    return 0;
+  });
 
   const totalExercises = plan.length;
-  const totalMinutes = plan.reduce((acc, item) => acc + (parseInt(item.duration) || 0), 0);
-  const totalCalories = plan.reduce((acc, item) => acc + (parseInt(item.caloriesBurned) || 0), 0);
+  const totalMinutes = plan.reduce((acc:number, item:Workout) => acc + (parseInt(item.duration) || 0), 0);
+  const totalCalories = plan.reduce((acc:number, item:Workout) => acc + (parseInt(item.caloriesBurned) || 0), 0);
 
   return (
-    <div className="bg-neutral-950 min-h-screen text-white py-8 sm:py-12">
+    <div className="bg-neutral-950 min-h-screen text-white py-12">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">MY PLAN</h1>
-          <p className="text-neutral-400 mt-1 text-sm sm:text-base">
+          <h1 className="text-4xl font-black uppercase">MY PLAN</h1>
+          <p className="text-neutral-400 mt-1">
             Cap of five lifts for today. Finish them, then load more.
           </p>
         </div>
 
         {/* Metrics Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-10">
-          <div className="bg-neutral-900 border border-neutral-800 p-5 sm:p-6 rounded-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+          <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg">
             <span className="text-neutral-500 text-xs font-bold uppercase block mb-1">
               Exercises
             </span>
-            <span className="text-2xl sm:text-3xl font-black text-white">{totalExercises} / 5</span>
+            <span className="text-3xl font-black text-white">{totalExercises} / 5</span>
           </div>
-          <div className="bg-neutral-900 border border-neutral-800 p-5 sm:p-6 rounded-lg">
+          <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg">
             <span className="text-neutral-500 text-xs font-bold uppercase block mb-1">
               Minutes
             </span>
-            <span className="text-2xl sm:text-3xl font-black text-[#ccff00]">{totalMinutes} min</span>
+            <span className="text-3xl font-black text-[#ccff00]">{totalMinutes} min</span>
           </div>
-          <div className="bg-neutral-900 border border-neutral-800 p-5 sm:p-6 rounded-lg">
+          <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg">
             <span className="text-neutral-500 text-xs font-bold uppercase block mb-1">
-              Calories
+              calories
             </span>
-            <span className="text-2xl sm:text-3xl font-black text-orange-500">{totalCalories} kcal</span>
+            <span className="text-3xl font-black text-orange-500">{totalCalories} kcal</span>
           </div>
         </div>
 
-        {/* Tabs */}
-        <div className="flex border-b border-neutral-800 mb-8 overflow-x-auto">
-          <button
-            onClick={() => setActiveTab("plan")}
-            className={`pb-4 px-4 sm:px-6 font-bold text-base sm:text-lg whitespace-nowrap transition-colors ${
-              activeTab === "plan"
-                ? "border-b-2 border-[#ccff00] text-[#ccff00]"
-                : "text-neutral-400 hover:text-white"
-            }`}
-          >
-            {`Today's Plan`} ({plan.length})
-          </button>
-          <button
-            onClick={() => setActiveTab("saved")}
-            className={`pb-4 px-4 sm:px-6 font-bold text-base sm:text-lg whitespace-nowrap transition-colors ${
-              activeTab === "saved"
-                ? "border-b-2 border-[#ccff00] text-[#ccff00]"
-                : "text-neutral-400 hover:text-white"
-            }`}
-          >
-            Saved ({saved.length})
-          </button>
+        {/* Tabs and Sorting Dropdown Header */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between border-b border-neutral-800 mb-8 gap-4">
+          {/* Tabs (Left Side) */}
+          <div className="flex w-full sm:w-auto">
+            <button
+              onClick={() => setActiveTab("plan")}
+              className={`pb-4 px-6 font-bold text-lg transition-colors ${
+                activeTab === "plan"
+                  ? "border-b-2 border-[#ccff00] text-[#ccff00]"
+                  : "text-neutral-400 hover:text-white"
+              }`}
+            >
+              {`Today's Plan`}({plan.length})
+            </button>
+            <button
+              onClick={() => setActiveTab("saved")}
+              className={`pb-4 px-6 font-bold text-lg transition-colors ${
+                activeTab === "saved"
+                  ? "border-b-2 border-[#ccff00] text-[#ccff00]"
+                  : "text-neutral-400 hover:text-white"
+              }`}
+            >
+              Saved ({saved.length})
+            </button>
+          </div>
+
+          {/* Sorting Dropdown (Right Side - Label Outside & Above) */}
+          <div className="flex flex-col items-start sm:items-end pb-3 w-full sm:w-auto">
+            <label htmlFor="sort-select" className="text-xs font-bold uppercase text-neutral-400 mb-1">
+              Sort By
+            </label>
+            <select
+              id="sort-select"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="bg-neutral-900 text-neutral-200 border border-neutral-700 rounded-lg px-4 py-2 text-sm font-medium focus:outline-none focus:border-[#ccff00] cursor-pointer"
+            >
+              <option value="duration">Duration</option>
+              <option value="calories">Calories</option>
+              <option value="rating">Rating</option>
+            </select>
+          </div>
         </div>
 
         {/* Empty State */}
         {currentList.length === 0 ? (
-          <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-8 sm:p-12 text-center my-8">
+          <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-12 text-center my-8">
             <Dumbbell className="w-12 h-12 text-neutral-600 mx-auto mb-4" />
             <h3 className="text-2xl font-black uppercase mb-2">NOTHING HERE YET</h3>
-            <p className="text-neutral-400 mb-6 text-sm sm:text-base">
+            <p className="text-neutral-400 mb-6">
               Browse the library and add a lift to get today moving.
             </p>
             <Link
@@ -272,29 +130,26 @@ export default function MyPlanPage() {
                 key={item.id}
                 className={`bg-neutral-900 border ${
                   item.done ? "border-emerald-800 bg-neutral-900/60" : "border-neutral-800"
-                } rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4`}
+                } rounded-lg p-4 flex flex-col md:flex-row items-center justify-between gap-4`}
               >
-                {/* Left side: Thumbnail & Info */}
-                <div className="flex items-center gap-4 w-full sm:w-auto">
+                <div className="flex items-center gap-4 w-full md:w-auto">
                   <Image
                     src={item.image || "https://via.placeholder.com/150"}
                     alt={item.name}
-                    width={80}
-                    height={80}
-                    className="w-20 h-20 rounded-lg object-cover bg-neutral-800 flex-shrink-0"
+                    width={740}
+                    height={416}
+                    className="w-20 h-20 rounded object-cover bg-neutral-800"
                   />
                   <div>
                     <h3
-                      className={`font-bold text-base sm:text-lg uppercase ${
+                      className={`font-bold text-lg uppercase ${
                         item.done ? "line-through text-neutral-500" : "text-white"
                       }`}
                     >
                       {item.name}
                     </h3>
-                    <p className="text-neutral-400 text-xs sm:text-sm mb-2">{item.equipment}</p>
-                    
-                    {/* Stats Row */}
-                    <div className="flex items-center gap-3 sm:gap-4 text-xs text-neutral-400 flex-wrap">
+                    <p className="text-neutral-400 text-sm mb-2">{item.equipment}</p>
+                    <div className="flex items-center gap-4 text-xs text-neutral-400">
                       <span className="flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5 text-[#ccff00]" /> {item.duration}
                       </span>
@@ -308,12 +163,11 @@ export default function MyPlanPage() {
                   </div>
                 </div>
 
-                {/* Right side: Actions */}
-                <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end pt-2 sm:pt-0 border-t sm:border-t-0 border-neutral-800">
+                <div className="flex items-center gap-3 w-full md:w-auto justify-end">
                   {/* View Details Button */}
                   <Link
                     href={`/workout/${item.id}`}
-                    className="px-4 sm:px-5 py-2 bg-neutral-900 border border-neutral-700 text-white text-xs sm:text-sm font-semibold rounded-full hover:bg-neutral-800 transition-colors whitespace-nowrap"
+                    className="px-5 py-2.5 bg-neutral-900 border border-neutral-700 text-white text-sm font-semibold rounded-full hover:bg-neutral-800 transition-colors"
                   >
                     View Details
                   </Link>
@@ -322,14 +176,14 @@ export default function MyPlanPage() {
                   {activeTab === "plan" && (
                     <button
                       onClick={() => markAsDone(item.id)}
-                      className={`flex items-center gap-1.5 px-4 sm:px-5 py-2 text-xs sm:text-sm font-bold rounded-full transition-colors whitespace-nowrap ${
+                      className={`flex items-center gap-2 px-5 py-2.5 text-sm font-bold rounded-full transition-colors ${
                         item.done
                           ? "bg-emerald-600 text-white"
                           : "bg-[#ccff00] text-black hover:bg-opacity-90"
                       }`}
                     >
                       <Check className="w-4 h-4 stroke-[3]" />
-                      <span>{item.done ? "Done" : "Mark as Done"}</span>
+                      <span>Mark as Done</span>
                     </button>
                   )}
 
@@ -340,7 +194,7 @@ export default function MyPlanPage() {
                         ? removeFromPlan(item.id)
                         : removeFromSaved(item.id)
                     }
-                    className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-neutral-900 border border-neutral-700 text-neutral-400 hover:text-white rounded-full transition-colors flex-shrink-0"
+                    className="w-10 h-10 flex items-center justify-center bg-neutral-900 border border-neutral-700 text-neutral-400 hover:text-white rounded-full transition-colors"
                     title="Remove"
                   >
                     <X className="w-4 h-4" />
