@@ -1,4 +1,5 @@
-# FitLog
+# FitLog![Uploading Screenshot fitlog page.png…]()
+
 
 FitLog is a modern web application designed to help users track, organize, and manage their daily workout routines and fitness goals efficiently.
 
