@@ -1,5 +1,6 @@
-# FitLog![Uploading Screenshot fitlog page.png…]()
+<img width="1352" height="640" alt="Screenshot fitlog page" src="https://github.com/user-attachments/assets/678d39be-d706-42c0-b85e-9ca407761055" />
 
+# FitLog
 
 FitLog is a modern web application designed to help users track, organize, and manage their daily workout routines and fitness goals efficiently.
 
